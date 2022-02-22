@@ -20,18 +20,6 @@ public class ProjectController {
     @Autowired
     private ProjectCreationService projectCreationService;
 
-    @GetMapping
-    public ResponseEntity<List<ProjectDTO>> getAllProjects(@RequestParam(defaultValue = "0") Integer pageNumber,
-                                                   @RequestParam(defaultValue = "3") Integer pageSizes,
-                                                   @RequestParam(defaultValue = "name") String sortBy) throws ExecutionException, InterruptedException {
-        CompletableFuture<List<ProjectDTO>> getListOfUsersAsynchronously=projectCreationService.getaLL(pageNumber,pageSizes,sortBy);
-        List<ProjectDTO> allProjects=null;
-        if(getListOfUsersAsynchronously.get().size()>0){
-            allProjects=getListOfUsersAsynchronously.get();
-            return new ResponseEntity<List<ProjectDTO>>(allProjects, new HttpHeaders(), HttpStatus.OK);
-        }
-        return new ResponseEntity<List<ProjectDTO>>(allProjects, new HttpHeaders(), HttpStatus.OK);
-    }
 
     @GetMapping("/{project_id}")
     public ResponseEntity<ProjectDTO> findProjectById(@PathVariable("project_id") int id) throws ExecutionException, InterruptedException {
